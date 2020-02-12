@@ -6,6 +6,7 @@
     <modules>
         <module>pidgeot-common</module>
         <module>pidgeot-client</module>
+        <module>pidgeot-server</module>
     </modules>
     <parent>
         <groupId>io.jovi.ditto</groupId>
