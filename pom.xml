@@ -25,7 +25,7 @@
         <ditto.version>1.0-SNAPSHOT</ditto.version>
         <pidgeot.version>1.0-SNAPSHOT</pidgeot.version>
         <h2.version>1.4.193</h2.version>
-        <netty.version>4.1.39.Final</netty.version>
+        <netty.version>4.1.42.Final</netty.version>
         <jasypt.version>2.1.0</jasypt.version>
     </properties>
 
