@@ -32,10 +32,9 @@ public class SessionMap {
     private static SessionMap singleInstance = new SessionMap();
 
     //会话集合
-    private ConcurrentHashMap<String, ServerSession> map =
-            new ConcurrentHashMap<String, ServerSession>();
+    private ConcurrentHashMap<String, ServerSession> map = new ConcurrentHashMap<String, ServerSession>();
 
-    public static SessionMap inst() {
+    public static SessionMap instance() {
         return singleInstance;
     }
 

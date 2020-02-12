@@ -36,18 +36,24 @@ public class ServerSession {
             AttributeKey.valueOf("SESSION_KEY");
 
     /**
+     * 通道
      * 用户实现服务端会话管理的核心
      */
-    //通道
     private Channel channel;
 
-    //用户
+    /**
+     * 用户
+     */
     private User user;
 
-    //session唯一标示
+    /**
+     * session唯一标示
+     */
     private final String sessionId;
 
-    //登录状态
+    /**
+     * 登录状态
+     */
     private boolean isLogin = false;
 
     /**
@@ -60,35 +66,45 @@ public class ServerSession {
         this.sessionId = buildNewSessionId();
     }
 
-    //反向导航
+    /**
+     * 反向导航
+     * @param ctx
+     * @return
+     */
     public static ServerSession getSession(ChannelHandlerContext ctx) {
         Channel channel = ctx.channel();
         return channel.attr(ServerSession.SESSION_KEY).get();
     }
 
-    //关闭连接
+    /**
+     * 关闭连接
+     * @param ctx
+     */
     public static void closeSession(ChannelHandlerContext ctx) {
         ServerSession session =
                 ctx.channel().attr(ServerSession.SESSION_KEY).get();
 
         if (null != session && session.isValid()) {
             session.close();
-            SessionMap.inst().removeSession(session.getSessionId());
+            SessionMap.instance().removeSession(session.getSessionId());
         }
     }
 
-    //和channel 通道实现双向绑定
+    /**
+     * 和channel 通道实现双向绑定
+     * @return
+     */
     public ServerSession bind() {
         log.info(" ServerSession 绑定会话 " + channel.remoteAddress());
         channel.attr(ServerSession.SESSION_KEY).set(this);
-        SessionMap.inst().addSession(getSessionId(), this);
+        SessionMap.instance().addSession(getSessionId(), this);
         isLogin = true;
         return this;
     }
 
     public ServerSession unbind() {
         isLogin = false;
-        SessionMap.inst().removeSession(getSessionId());
+        SessionMap.instance().removeSession(getSessionId());
         this.close();
         return this;
     }
