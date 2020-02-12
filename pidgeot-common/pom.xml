@@ -8,8 +8,19 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <groupId>io.jovi.pidgeot</groupId>
     <artifactId>pidgeot-common</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>io.jovi.ditto</groupId>
+            <artifactId>ditto-core</artifactId>
+        </dependency>
+        <!--netty start-->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+        </dependency>
+        <!--netty end-->
+    </dependencies>
 </project>

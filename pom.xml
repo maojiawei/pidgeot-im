@@ -32,6 +32,23 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--pidgeot start-->
+            <dependency>
+                <groupId>io.jovi.pidgeot</groupId>
+                <artifactId>pidgeot-common</artifactId>
+                <version>${pidgeot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jovi.pidgeot</groupId>
+                <artifactId>pidgeot-client</artifactId>
+                <version>${pidgeot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jovi.pidgeot</groupId>
+                <artifactId>pidgeot-server</artifactId>
+                <version>${pidgeot.version}</version>
+            </dependency>
+            <!--pidgeot end-->
             <!--jasypt start-->
             <dependency>
                 <groupId>com.github.ulisesbocchio</groupId>

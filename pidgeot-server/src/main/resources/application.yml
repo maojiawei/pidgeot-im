@@ -1,0 +1,5 @@
+server:
+  port: 8002
+pidgeot:
+  im:
+    port: 6002
