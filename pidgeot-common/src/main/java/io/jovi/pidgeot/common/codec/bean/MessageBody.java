@@ -1,9 +1,12 @@
 package io.jovi.pidgeot.common.codec.bean;
 
+import com.alibaba.fastjson.JSON;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.io.IOException;
 
 /**
  * <p>
@@ -41,4 +44,8 @@ public class MessageBody {
      * 消息类型
      */
     private Integer type;
+
+    public byte[] toByteArray() {
+        return JSON.toJSONString(this).getBytes();
+    }
 }

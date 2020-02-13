@@ -36,6 +36,10 @@ public enum  MessageTypeEnum {
      */
     private Integer type;
 
+    public Integer type(){
+        return type;
+    }
+
     /**
      * 消息类型
      * @param type
