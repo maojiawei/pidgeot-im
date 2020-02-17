@@ -1,8 +1,8 @@
-package io.jovi.pidgeot.common.codec;
+package io.jovi.pidgeot.common.codec.security;
 
 /**
  * <p>
- * Title:
+ * Title: 魔数
  * </p >
  * <p>
  * Description:
@@ -15,9 +15,10 @@ package io.jovi.pidgeot.common.codec;
  * @author MaoJiaWei
  * @version 1.0
  */
-public class JsonInstant {
+public class MagicConstant {
     /**
      * 魔数，可以通过配置获取
+     *
      */
     public static final short MAGIC_CODE = 0x86;
 

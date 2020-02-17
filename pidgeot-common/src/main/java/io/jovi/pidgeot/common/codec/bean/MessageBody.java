@@ -29,13 +29,9 @@ import java.io.IOException;
 @NoArgsConstructor
 public class MessageBody {
     /**
-     * 发送方
+     * 头部
      */
-    private User user;
-    /**
-     * 群ID
-     */
-    private Long groupId;
+    private MessageHeader header;
     /**
      * 内容
      */
@@ -48,4 +44,6 @@ public class MessageBody {
     public byte[] toByteArray() {
         return JSON.toJSONString(this).getBytes();
     }
+
+
 }

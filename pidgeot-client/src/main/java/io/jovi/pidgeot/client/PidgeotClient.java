@@ -1,7 +1,5 @@
 package io.jovi.pidgeot.client;
 
-import io.jovi.pidgeot.common.codec.JsonDecoder;
-import io.jovi.pidgeot.common.codec.JsonEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.ChannelFuture;
@@ -71,8 +69,7 @@ public class PidgeotClient {
             bootstrap.handler(new ChannelInitializer<SocketChannel>() {
                   @Override
                   public void initChannel(SocketChannel ch) {
-                      ch.pipeline().addLast("decoder", new JsonDecoder());
-                      ch.pipeline().addLast("encoder", new JsonEncoder());
+
                   }
               }
             );

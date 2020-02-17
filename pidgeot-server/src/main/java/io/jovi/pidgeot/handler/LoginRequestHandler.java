@@ -1,9 +1,9 @@
 package io.jovi.pidgeot.handler;
 
+import com.alibaba.fastjson.JSON;
+import io.jovi.pidgeot.common.codec.bean.ChatUser;
 import io.jovi.pidgeot.common.codec.bean.MessageBody;
-import io.jovi.pidgeot.concurrent.CallbackTask;
-import io.jovi.pidgeot.concurrent.CallbackTaskScheduler;
-import io.jovi.pidgeot.server.ServerSession;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -31,48 +31,17 @@ import org.springframework.stereotype.Service;
 public class LoginRequestHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        if (null == msg || !(msg instanceof MessageBody)) {
-            super.channelRead(ctx, msg);
-            return;
+        ByteBuf in = (ByteBuf) msg;
+        int len = in.readableBytes();
+        byte[] arr = new byte[len];
+        in.getBytes(0, arr);
+        String message = new String(arr, "UTF-8");
+        log.info("server received: " + message);
+
+        MessageBody messageBody = JSON.parseObject(message,MessageBody.class);
+        ChatUser user = messageBody.getHeader().getUser();
+        if(!"pidgeot".equalsIgnoreCase(user.getAccount())){
+
         }
-        MessageBody message = (MessageBody) msg;
-        //取得请求类型
-//        ProtoMsg.HeadType headType = pkg.getType();
-//        if (!headType.equals(loginProcesser.type())) {
-//            super.channelRead(ctx, msg);
-//            return;
-//        }
-
-        ServerSession session = new ServerSession(ctx.channel());
-        //异步任务，处理登录的逻辑
-        CallbackTaskScheduler.add(new CallbackTask<Boolean>() {
-            @Override
-            public Boolean execute() throws Exception {
-//                boolean r = loginProcesser.action(session, pkg);
-                return true;
-            }
-
-            //异步任务返回
-            @Override
-            public void onBack(Boolean r) {
-                if (r) {
-                    ctx.pipeline().remove(LoginRequestHandler.this);
-                    log.info("登录成功:" + session.getUser());
-
-                } else {
-                    ServerSession.closeSession(ctx);
-                    log.info("登录失败:" + session.getUser());
-
-                }
-
-            }
-            //异步任务异常
-            @Override
-            public void onException(Throwable t) {
-                ServerSession.closeSession(ctx);
-                log.info("登录失败:" + session.getUser());
-
-            }
-        });
     }
 }

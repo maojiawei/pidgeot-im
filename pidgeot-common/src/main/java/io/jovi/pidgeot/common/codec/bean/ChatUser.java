@@ -24,11 +24,15 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class User {
+public class ChatUser {
     /**
      * 用户编号
      */
     private String uid;
+    /**
+     * 账号名称
+     */
+    private String account;
     /**
      * 设备ID
      */
@@ -50,7 +54,9 @@ public class User {
      */
     private PLATTYPE platform = PLATTYPE.WINDOWS;
 
-    // windows,mac,android, ios, web , other
+    /**
+     * 平台
+     */
     public enum PLATTYPE {
         WINDOWS, MAC, ANDROID, IOS, WEB, OTHER;
     }

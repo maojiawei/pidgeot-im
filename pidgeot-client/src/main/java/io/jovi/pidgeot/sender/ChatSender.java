@@ -1,8 +1,12 @@
 package io.jovi.pidgeot.sender;
 
+import io.jovi.pidgeot.common.codec.JsonInstant;
+import io.jovi.pidgeot.common.codec.bean.ChatUser;
 import io.jovi.pidgeot.common.codec.bean.MessageBody;
+import io.jovi.pidgeot.common.codec.bean.MessageHeader;
 import io.jovi.pidgeot.common.codec.bean.MessageTypeEnum;
 import io.jovi.pidgeot.handler.ChatCallbackHandler;
+import io.jovi.pidgeot.mock.ChatUserMock;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.*;
@@ -33,15 +37,22 @@ import java.nio.charset.Charset;
 @Slf4j
 @Service
 public class ChatSender implements BaseSender{
-
+    /**
+     * 发送消息
+     * @param uid
+     * @param content
+     */
     @Override
-    public void sendChatMsg(String touid, String content) {
+    public void sendChatMsg(String uid, String content) {
         log.info("发送消息 startConnectServer");
+        ChatUser chatUser = ChatUserMock.getByUid(uid);
+        MessageHeader header = new MessageHeader();
+        header.setUser(chatUser);
+        header.setMagic(JsonInstant.MAGIC_CODE);
         MessageBody chatMsg = new MessageBody();
         chatMsg.setContent(content);
+        chatMsg.setHeader(header);
         chatMsg.setType(MessageTypeEnum.TEXT.type());
-
-
         this.sendMsg(chatMsg);
     }
 
@@ -81,7 +92,7 @@ public class ChatSender implements BaseSender{
             Channel channel = future.channel();
 
             // 发送消息
-            byte[] bytes = "疯狂创客圈：高性能学习社群!".getBytes(Charset.forName("utf-8"));
+            byte[] bytes = message.toByteArray();
             //发送ByteBuf
             ByteBuf buffer = channel.alloc().buffer();
             buffer.writeBytes(bytes);

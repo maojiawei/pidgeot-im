@@ -18,8 +18,8 @@ package io.jovi.pidgeot.sender;
 public interface BaseSender {
     /**
      * 发送消息
-     * @param touid
+     * @param uid 用户ID
      * @param content
      */
-    void sendChatMsg(String touid, String content);
+    void sendChatMsg(String uid, String content);
 }
