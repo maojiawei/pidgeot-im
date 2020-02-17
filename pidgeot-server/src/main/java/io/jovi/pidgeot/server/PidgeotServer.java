@@ -1,14 +1,13 @@
 package io.jovi.pidgeot.server;
 
+import io.jovi.pidgeot.handler.ChatReceiveHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.serialization.ClassResolvers;
-import io.netty.handler.codec.serialization.ObjectDecoder;
-import io.netty.handler.codec.serialization.ObjectEncoder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -39,6 +38,9 @@ public class PidgeotServer implements CommandLineRunner {
     @Value("${pidgeot.im.port}")
     private int port;
 
+    @Autowired
+    private ChatReceiveHandler chatReceiveHandler;
+
     @Override
     public void run(String... args) throws Exception {
         log.info("正在启动netty服务,端口:{}",port);
@@ -57,15 +59,13 @@ public class PidgeotServer implements CommandLineRunner {
             // 3. 设置监听端口
             bootstrap.localAddress(new InetSocketAddress(port));
             // 4. 设置通道选项
-            bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
             bootstrap.option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
 
             // 5. 装配流水线
             bootstrap.childHandler(new ChannelInitializer<Channel>() {
                 @Override
                 protected void initChannel(Channel channel)  {
-                    channel.pipeline().addLast(new ObjectEncoder());
-                    channel.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingConcurrentResolver(null)));
+                    channel.pipeline().addLast(chatReceiveHandler);
                 }
             });
             // 6. 开始绑定server

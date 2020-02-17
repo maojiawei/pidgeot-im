@@ -69,11 +69,12 @@ public class PidgeotClient {
 
             // 设置通道初始化
             bootstrap.handler(new ChannelInitializer<SocketChannel>() {
-                          public void initChannel(SocketChannel ch) {
-                              ch.pipeline().addLast("decoder", new JsonDecoder());
-                              ch.pipeline().addLast("encoder", new JsonEncoder());
-                          }
-                      }
+                  @Override
+                  public void initChannel(SocketChannel ch) {
+                      ch.pipeline().addLast("decoder", new JsonDecoder());
+                      ch.pipeline().addLast("encoder", new JsonEncoder());
+                  }
+              }
             );
             log.info("客户端开始连接 [疯狂创客圈IM]");
 

@@ -1,10 +1,10 @@
 package io.jovi.pidgeot.handler;
 
-import io.jovi.pidgeot.common.codec.bean.MessageBody;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
@@ -21,24 +21,20 @@ import org.springframework.stereotype.Service;
  * @author MaoJiaWei
  * @version 1.0
  */
+@Slf4j
 @ChannelHandler.Sharable
-@Service("chatHandler")
 public class ChatHandler extends ChannelInboundHandlerAdapter {
+
     /**
      * 业务逻辑处理
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        //判断消息实例
-        if (null == msg || !(msg instanceof MessageBody)) {
-            super.channelRead(ctx, msg);
-            return;
-        }
-
-        //转换实体
-        MessageBody message = (MessageBody) msg;
-        String content = message.getContent();
-
-        System.out.println(" 收到消息：" +  content);
+        ByteBuf in = (ByteBuf) msg;
+        int len = in.readableBytes();
+        byte[] arr = new byte[len];
+        in.getBytes(0, arr);
+        log.info("client received: " + new String(arr, "UTF-8"));
+        in.release();
     }
 }

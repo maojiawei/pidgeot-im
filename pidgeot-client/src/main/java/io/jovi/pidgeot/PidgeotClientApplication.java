@@ -1,6 +1,9 @@
 package io.jovi.pidgeot;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 
 /**
  * <p>
@@ -17,6 +20,7 @@ import org.springframework.boot.SpringApplication;
  * @author MaoJiaWei
  * @version 1.0
  */
+@SpringBootApplication(exclude={DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 public class PidgeotClientApplication {
     /**
      * 主程序入口
