@@ -45,6 +45,10 @@ public class ChatSender implements BaseSender{
         this.sendMsg(chatMsg);
     }
 
+    /**
+     * 发送消息
+     * @param message
+     */
     public void sendMsg(MessageBody message){
         //事件池
         EventLoopGroup group = new NioEventLoopGroup();
@@ -66,9 +70,9 @@ public class ChatSender implements BaseSender{
                 public void operationComplete(Future<? super Void> future) throws Exception {
                     // 回调
                     if (future.isSuccess()) {
-                        log.info("客户端连接成功");
+                        log.info("服务端连接成功");
                     } else {
-                        log.info("客户端连接失败");
+                        log.info("服务端连接失败");
                     }
                 }
             });
