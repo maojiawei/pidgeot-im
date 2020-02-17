@@ -2,7 +2,7 @@ package io.jovi.pidgeot.sender;
 
 import io.jovi.pidgeot.common.codec.bean.MessageBody;
 import io.jovi.pidgeot.common.codec.bean.MessageTypeEnum;
-import io.jovi.pidgeot.handler.ChatHandler;
+import io.jovi.pidgeot.handler.ChatCallBackHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.*;
@@ -55,7 +55,7 @@ public class ChatSender implements BaseSender{
                 .handler(new ChannelInitializer<Channel>() {
                     @Override
                     protected void initChannel(Channel channel)  {
-                        channel.pipeline().addLast(new ChatHandler());
+                        channel.pipeline().addLast(new ChatCallBackHandler());
                     }
                 });
         ChannelFuture future = null;

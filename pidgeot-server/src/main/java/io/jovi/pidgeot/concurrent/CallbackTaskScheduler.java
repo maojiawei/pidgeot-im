@@ -92,6 +92,7 @@ public class CallbackTaskScheduler extends Thread {
     private <R> void handleTask(CallbackTask<R> executeTask) {
 
         ListenableFuture<R> future = gPool.submit(new Callable<R>() {
+            @Override
             public R call() throws Exception {
                 R r = executeTask.execute();
                 return r;
@@ -99,10 +100,11 @@ public class CallbackTaskScheduler extends Thread {
         });
 
         Futures.addCallback(future, new FutureCallback<R>() {
+            @Override
             public void onSuccess(R r) {
                 executeTask.onBack(r);
             }
-
+            @Override
             public void onFailure(Throwable t) {
                 executeTask.onException(t);
             }

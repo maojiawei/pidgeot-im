@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @ChannelHandler.Sharable
-public class ChatHandler extends ChannelInboundHandlerAdapter {
+public class ChatCallBackHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 业务逻辑处理
